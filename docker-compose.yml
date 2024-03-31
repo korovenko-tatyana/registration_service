@@ -1,0 +1,47 @@
+version: '3.7'
+
+networks:
+  net:
+    driver: bridge
+
+services:
+  api:
+    build:
+      context: ./api
+    environment:
+      DATABASE_URL: "pgsql://test:test@postgres:5432/test_vk"
+    volumes:
+      - "./api:/api"
+    depends_on:
+      - postgres
+    networks:
+      - net
+
+  nginx:
+    build:
+      context: ./api/nginx
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      - "./api:/api"
+    depends_on:
+      - api
+    networks:
+      - net
+  
+  postgres:
+    image: "postgres:13-alpine"
+    volumes:
+      - "pg-data:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=test
+      - POSTGRES_DB=test_vk
+    networks:
+      - net
+
+volumes:
+  pg-data:

@@ -1,0 +1,88 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Registration service
+            description: For VK
+            version: 1.0.0
+        components:
+            securitySchemes:
+                Bearer: 
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT
+            schemas:
+                'token':
+                    title: Token
+                    type: object
+                    properties:
+                        access_token:
+                            type: string
+                            example: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImN0eSI6IkpXVCJ9.eyJpYXQiOjE3MTE5MDQwODgsImV4cCI6MTcxMTkwNDE4OCwidXNlcl9pZCI6MTd9.PFR6vhmU8YxC9w7TYEdqOJNHkZW-V55jYNKcmWOJ39lDf3_7Te7qbDx83cYyoKxj4_XI7hrtV9iGNI5KxISvBxlL4mx6Irs6GvYjiuk_LUC2wjno8hYjV-qefvKK4C74clBQWbhJbQMNLToQG6hF9zCkumQP1dz9SnCZ-hRvUdJdye8ezDNj7LFEsSSP1luMieXEfQX08gpa1HHEYistY2w-O_Vb2T8q8wnDuHe57uGX45-Lvpvl1L7vLgEJZWbP8A2_WorJRQjl1hdZruyzCfGq4FMloN-C_kHNcaQTw4fhvVDOaFD-PreuW2OX1qBMTAH8ELzZ-h-GnuBnboLEzg
+                '401_login':
+                    title: Unauthorized
+                    type: object
+                    properties:
+                        code:
+                            type: string
+                            example: 401
+                        message:
+                            type: string
+                            example: Invalid credentials.
+                '400':
+                    title: Bad request
+                    type: object
+                    properties:
+                        errorMessage:
+                            type: string
+                '401':
+                    title: Unauthorized
+                    type: object
+                    properties:
+                        errorMessage:
+                            type: string
+                'passwordStatus':
+                    title: Password status
+                    type: array
+                    items:
+                        type: string
+                    enum:
+                        - good
+                        - perfect
+                    example: good
+        paths:
+            /authorize:
+                post:
+                    tags:
+                        - Auth
+                    summary: "Get access_token by email and password of user"
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    properties:
+                                        email:
+                                            type: string
+                                            example: "test@test.test"
+                                        password:
+                                            type: string
+                                            example: "RegisterPass999"
+                    responses:
+                        '200':
+                            description: OK
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/token'
+                        '401':
+                            description: Unauthorized
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: '#/components/schemas/401_login'
+                        '400':
+                            description: Bad Request
+
+    areas: # to filter documented areas
+        default:
+            disable_default_routes: true
