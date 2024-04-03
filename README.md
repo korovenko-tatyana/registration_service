@@ -17,6 +17,8 @@ docker exec -it registration_service-api-1 /bin/bash
 composer install
 ```
 
+Если такого контейнера не будет, сделать docker ps и найти имя контейнера с api
+
 Приложение занимает порт 8000
 
 Документация: http://localhost:8000/api/doc
