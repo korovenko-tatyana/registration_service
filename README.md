@@ -7,6 +7,16 @@
     docker compose up --build
     ```
 
+Если проект не запускается, перейти в контейнер с api:
+```
+docker exec -it registration_service-api-1 /bin/bash
+```
+
+И выполнить команду 
+```
+composer install
+```
+
 Приложение занимает порт 8000
 
 Документация: http://localhost:8000/api/doc
