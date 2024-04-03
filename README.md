@@ -7,7 +7,7 @@
     docker compose up --build
     ```
 
-Если проект не запускается, перейти в контейнер с api:
+Если запросы не выполняются, перейти в контейнер с api:
 ```
 docker exec -it registration_service-api-1 /bin/bash
 ```
